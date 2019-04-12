@@ -69,10 +69,29 @@ module.exports = {
         },
       ],
     },
+    axios: {                         //   是否下载axios
+      when: 'isNotTest',
+      type: 'confirm',
+      message: 'Install axios?',
+    },
     router: {
       when: 'isNotTest',
       type: 'confirm',
       message: 'Install vue-router?',
+    },
+    mockjs: {
+      when: 'isNotTest',
+      type: 'confirm',
+      message: 'Install mock.js?',
+    },
+    vuex: {
+      "type": "confirm",
+      "message": "Install vuex?"
+    },
+    elementUI: {
+      when: 'isNotTest',
+      type: 'confirm',
+      message: 'Install element-UI?',
     },
     lint: {
       when: 'isNotTest',
@@ -170,6 +189,10 @@ module.exports = {
     'test/unit/setup.js': "unit && runner === 'jest'",
     'test/e2e/**/*': 'e2e',
     'src/router/**/*': 'router',
+    'src/store/**/*': 'vuex',
+    'src/mock/**/*': 'mockjs',
+    'src/api/**/*': 'axios',  // 是否建立api 文件夹
+    'src/utils/**/*': 'axios',  // 是否建立utils 文件夹
   },
   complete: function(data, { chalk }) {
     const green = chalk.green
