@@ -1,45 +1,46 @@
-{{#if_eq build "standalone"}}
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-{{/if_eq}}
-import Vue from 'vue'{{#if_eq lintConfig "airbnb"}};{{/if_eq}}
-import App from './App'{{#if_eq lintConfig "airbnb"}};{{/if_eq}}
-{{#router}}
-import router from './router'{{#if_eq lintConfig "airbnb"}};{{/if_eq}}
-{{/router}}
+import Vue from 'vue'
+import ElementUI from 'element-ui'
+import VueRouter from 'vue-router'
 
-{{#vuex}}  //vuex为true的时候就会写入这些
-import Vuex from 'vuex'{{#if_eq lintConfig "airbnb"}};{{/if_eq}}
-import store from  './store/store'{{#if_eq lintConfig "airbnb"}};{{/if_eq}}
-Vue.use(Vuex){{#if_eq lintConfig "airbnb"}};{{/if_eq}}
-{{/vuex}}
+import 'element-ui/lib/theme-default/index.css'
 
-{{#mockjs}}
-import './mock'{{#if_eq lintConfig "airbnb"}};{{/if_eq}}
-{{/mockjs}}
+import auth from './auth'
+import App from './App'
 
-{{#elementUI}}
-import ElementUI from 'element-ui'{{#if_eq lintConfig "airbnb"}};{{/if_eq}}
-import 'element-ui/lib/theme-chalk/index.css'{{#if_eq lintConfig "airbnb"}};{{/if_eq}}
-{{/elementUI}}
+import Layout from './components/Layout'
+import Search from './components/Search'
+import Editor from './components/Editor'
 
+import routes from './router-config'
 
-Vue.config.productionTip = false
+Vue.component(Layout.name, Layout)
+Vue.component(Search.name, Search)
+Vue.component(Editor.name, Editor)
+
+Vue.use(ElementUI)
+Vue.use(VueRouter)
+
+const router = new VueRouter({
+  mode: 'hash',
+  base: __dirname,
+  routes
+})
+
+router.beforeEach((to, from, next) => {
+  if (!auth.loggedIn() && to.name !== 'login') {
+    next({
+      path: '/login',
+      query: { redirect: to.fullPath }
+    })
+  } else {
+    next()
+  }
+})
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
-  {{#router}}
+  template: '<App/>',
   router,
-  {{/router}}
-  {{#vuex}}
-  store,
-  {{/vuex}}
-  {{#if_eq build "runtime"}}
-  render: h => h(App)
-  {{/if_eq}}
-  {{#if_eq build "standalone"}}
-  components: { App },
-  template: '<App/>'
-  {{/if_eq}}
+  components: { App }
 })

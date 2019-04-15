@@ -1,7 +1,3 @@
-/build/
-/config/
-/dist/
-/*.js
-{{#unit}}
-/test/unit/coverage/
-{{/unit}}
+build/*.js
+config/*.js
+static/js/tinymce

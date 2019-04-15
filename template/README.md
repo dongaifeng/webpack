@@ -1,8 +1,8 @@
-# {{ name }}
+# {{name}}
 
-> {{ description }}
+> {{description}}
 
-## Build Setup
+## 使用
 
 ``` bash
 # install dependencies
@@ -14,23 +14,24 @@ npm run dev
 # build for production with minification
 npm run build
 
-# build for production and view the bundle analyzer report
-npm run build --report
-{{#unit}}
+# run e2e tests
+npm run e2e
 
 # run unit tests
 npm run unit
-{{/unit}}
-{{#e2e}}
-
-# run e2e tests
-npm run e2e
-{{/e2e}}
-{{#if_or unit e2e}}
 
 # run all tests
-npm test
-{{/if_or}}
+run test
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+## 结构
+
+```
+| - src
+  | - api           定义请求接口
+  | - components    存放定义的组件
+  | - store         vuex
+  | - views         存放路由页面
+  | - nav-config.js 路由配置
+| - static          静态资源  
+```
